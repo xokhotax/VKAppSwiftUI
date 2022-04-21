@@ -22,7 +22,7 @@ struct ContentView: View {
   private let frameWidth = CGFloat(320)
   private let loginPicture = "loginBackgroundPic"
   
-  @FocusState private var textIsFocused: Field?
+  @FocusState private var textIsFocused: Bool
   
   var body: some View {
     
@@ -48,8 +48,8 @@ struct ContentView: View {
               .padding(.leading, 16)
             Spacer()
             TextField("", text: $login)
-              .focused($textIsFocused,
-                       equals: .login)
+              .focused($textIsFocused)
+              .keyboardType(.emailAddress)
               .padding(16)
               .frame(width: textFieldWidth,
                      alignment: .trailing)
@@ -61,8 +61,7 @@ struct ContentView: View {
               .padding(.leading, 16)
             Spacer()
             TextField("", text: $password)
-              .focused($textIsFocused,
-                       equals: .password)
+              .focused($textIsFocused)
               .padding(16)
               .frame(width: textFieldWidth,
                      height: .infinity,
@@ -72,6 +71,7 @@ struct ContentView: View {
           HStack {
             Button {
               print("Login success")
+              textIsFocused = false
             } label: {
               Text("Log In")
             }
@@ -80,6 +80,7 @@ struct ContentView: View {
             .font(.system(size: 16, weight:.bold))
             .frame(maxWidth:frameWidth)
           }
+          
           Spacer()
         }
         .frame(maxWidth:frameWidth)
