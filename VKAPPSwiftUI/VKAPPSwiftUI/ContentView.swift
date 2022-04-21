@@ -32,6 +32,7 @@ struct ContentView: View {
           .edgesIgnoringSafeArea(.all) .aspectRatio(contentMode: .fill) .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
       }
       ScrollView(showsIndicators: false) {
+
         VStack {
           if shouldShowLogo {
             Text("Welcome to VK App")
@@ -86,6 +87,10 @@ struct ContentView: View {
         .frame(maxWidth:frameWidth)
       }
     }
+    .onTapGesture(count: 1) {
+      textIsFocused = false
+    }
+    
   }
   
   struct ContentView_Previews: PreviewProvider {
