@@ -10,13 +10,19 @@ import Combine
 
 struct ContentView: View {
   
+  enum Field: Hashable {
+        case login
+        case password
+    }
+  
   @State private var login = ""
   @State private var password = ""
   @State private var shouldShowLogo: Bool = true
   private let textFieldWidth = CGFloat(220)
   private let frameWidth = CGFloat(320)
   private let loginPicture = "loginBackgroundPic"
-  private let keyboardIsOnPublisher = Publishers.Merge( NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification).map { _ in true }, NotificationCenter.default.publisher(for:UIResponder.keyboardWillHideNotification) .map { _ in false }).removeDuplicates()
+  
+  @FocusState private var textIsFocused: Field?
   
   var body: some View {
     
@@ -42,6 +48,8 @@ struct ContentView: View {
               .padding(.leading, 16)
             Spacer()
             TextField("", text: $login)
+              .focused($textIsFocused,
+                       equals: .login)
               .padding(16)
               .frame(width: textFieldWidth,
                      alignment: .trailing)
@@ -53,6 +61,8 @@ struct ContentView: View {
               .padding(.leading, 16)
             Spacer()
             TextField("", text: $password)
+              .focused($textIsFocused,
+                       equals: .password)
               .padding(16)
               .frame(width: textFieldWidth,
                      height: .infinity,
@@ -68,12 +78,7 @@ struct ContentView: View {
             .disabled(login.isEmpty || password.isEmpty)
             .foregroundColor(.white)
             .font(.system(size: 16, weight:.bold))
-            .onReceive(keyboardIsOnPublisher) { isKeyboardOn in withAnimation(Animation.easeInOut(duration: 0.5)) {
-              self.shouldShowLogo = !isKeyboardOn }
-            }
             .frame(maxWidth:frameWidth)
-            .onTapGesture {
-              UIApplication.shared.endEditing() }
           }
           Spacer()
         }
@@ -88,10 +93,4 @@ struct ContentView: View {
         .previewInterfaceOrientation(.portraitUpsideDown)
     }
   }
-  
-}
-
-extension UIApplication { func endEditing() {
-  sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-}
 }
