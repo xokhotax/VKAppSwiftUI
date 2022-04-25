@@ -11,9 +11,9 @@ import Combine
 struct ContentView: View {
   
   enum Field: Hashable {
-        case login
-        case password
-    }
+    case login
+    case password
+  }
   
   @State private var login = ""
   @State private var password = ""
@@ -26,71 +26,72 @@ struct ContentView: View {
   
   var body: some View {
     
-    ZStack {
-      GeometryReader { geometry in Image(loginPicture)
-          .resizable()
-          .edgesIgnoringSafeArea(.all) .aspectRatio(contentMode: .fill) .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
-      }
-      ScrollView(showsIndicators: false) {
-
-        VStack {
-          if shouldShowLogo {
-            Text("Welcome to VK App")
-              .foregroundColor(.white)
-              .padding(.top, 10)
-              .textCase(.uppercase)
-              .font(.system(size: 16,
-                            weight: .bold,
-                            design: .default))
-          }
-          HStack {
-            Text("Login")
-              .foregroundColor(.white)
-              .padding(.leading, 16)
-            Spacer()
-            TextField("", text: $login)
-              .focused($textIsFocused)
-              .keyboardType(.emailAddress)
-              .padding(16)
-              .frame(width: textFieldWidth,
-                     alignment: .trailing)
-              .textFieldStyle(.roundedBorder)
-          }
-          HStack {
-            Text("Password")
-              .foregroundColor(.white)
-              .padding(.leading, 16)
-            Spacer()
-            TextField("", text: $password)
-              .focused($textIsFocused)
-              .padding(16)
-              .frame(width: textFieldWidth,
-                     height: .infinity,
-                     alignment: .center)
-              .textFieldStyle(.roundedBorder)
-          }
-          HStack {
-            Button {
-              print("Login success")
-              textIsFocused = false
-            } label: {
-              Text("Log In")
-            }
-            .disabled(login.isEmpty || password.isEmpty)
-            .foregroundColor(.white)
-            .font(.system(size: 16, weight:.bold))
-            .frame(maxWidth:frameWidth)
-          }
-          
-          Spacer()
+    NavigationView {
+      
+      ZStack {
+        GeometryReader { geometry in Image(loginPicture)
+            .resizable()
+            .edgesIgnoringSafeArea(.all) .aspectRatio(contentMode: .fill) .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
         }
-        .frame(maxWidth:frameWidth)
+        ScrollView(showsIndicators: false) {
+          
+          VStack {
+            if shouldShowLogo {
+              Text("Welcome to VK App")
+                .foregroundColor(.white)
+                .padding(.top, 10)
+                .textCase(.uppercase)
+                .font(.system(size: 16,
+                              weight: .bold,
+                              design: .default))
+            }
+            HStack {
+              Text("Login")
+                .foregroundColor(.white)
+                .padding(.leading, 16)
+              Spacer()
+              TextField("", text: $login)
+                .focused($textIsFocused)
+                .keyboardType(.emailAddress)
+                .padding(16)
+                .frame(width: textFieldWidth,
+                       alignment: .trailing)
+                .textFieldStyle(.roundedBorder)
+            }
+            HStack {
+              Text("Password")
+                .foregroundColor(.white)
+                .padding(.leading, 16)
+              Spacer()
+              TextField("", text: $password)
+                .focused($textIsFocused)
+                .padding(16)
+                .frame(width: textFieldWidth,
+                       height: .infinity,
+                       alignment: .center)
+                .textFieldStyle(.roundedBorder)
+            }
+            
+            HStack {
+              NavigationLink(destination: CellView()){
+                Text("Log In")
+              }
+              .disabled(login.isEmpty || password.isEmpty)
+              .foregroundColor(.white)
+              .font(.system(size: 16, weight:.bold))
+              .frame(maxWidth:frameWidth)
+              .navigationBarHidden(true)
+            }
+            
+            Spacer()
+          }
+          .frame(maxWidth:frameWidth)
+        }
+      }
+      .onTapGesture(count: 1) {
+        textIsFocused = false
       }
     }
-    .onTapGesture(count: 1) {
-      textIsFocused = false
-    }
-    
   }
   
   struct ContentView_Previews: PreviewProvider {
