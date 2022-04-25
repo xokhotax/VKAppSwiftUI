@@ -19,8 +19,8 @@ struct ContentView: View {
   @State private var password = ""
   @State private var shouldShowLogo: Bool = true
   private let textFieldWidth = CGFloat(220)
+  private let textFieldHeight = CGFloat(16)
   private let frameWidth = CGFloat(320)
-  private let loginPicture = "loginBackgroundPic"
   
   @FocusState private var textIsFocused: Bool
   
@@ -29,10 +29,13 @@ struct ContentView: View {
     NavigationView {
       
       ZStack {
-        GeometryReader { geometry in Image(loginPicture)
-            .resizable()
-            .edgesIgnoringSafeArea(.all) .aspectRatio(contentMode: .fill) .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
+        GeometryReader { geometry in
+          BackGroundImage {
+            Image(backGroundPicture)
+          }
+          .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
         }
+        
         ScrollView(showsIndicators: false) {
           
           VStack {
@@ -53,29 +56,24 @@ struct ContentView: View {
               TextField("", text: $login)
                 .focused($textIsFocused)
                 .keyboardType(.emailAddress)
-                .padding(16)
-                .frame(width: textFieldWidth,
-                       alignment: .trailing)
-                .textFieldStyle(.roundedBorder)
+                .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
             }
             HStack {
               Text("Password")
                 .foregroundColor(.white)
+                .padding(.top, 16)
                 .padding(.leading, 16)
               Spacer()
               TextField("", text: $password)
                 .focused($textIsFocused)
-                .padding(16)
-                .frame(width: textFieldWidth,
-                       height: .infinity,
-                       alignment: .center)
-                .textFieldStyle(.roundedBorder)
+                .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
             }
             
             HStack {
               NavigationLink(destination: CellView()){
                 Text("Log In")
               }
+              .padding(16)
               .disabled(login.isEmpty || password.isEmpty)
               .foregroundColor(.white)
               .font(.system(size: 16, weight:.bold))
