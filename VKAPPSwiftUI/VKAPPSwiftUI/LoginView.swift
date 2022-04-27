@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct ContentView: View {
+struct LoginView: View {
   
   enum Field: Hashable {
     case login
@@ -70,7 +70,7 @@ struct ContentView: View {
             }
             
             HStack {
-              NavigationLink(destination: CellView()){
+              NavigationLink(destination: MainView()){
                 Text("Log In")
               }
               .padding(16)
@@ -94,7 +94,7 @@ struct ContentView: View {
   
   struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      ContentView()
+      LoginView()
         .previewInterfaceOrientation(.portraitUpsideDown)
     }
   }

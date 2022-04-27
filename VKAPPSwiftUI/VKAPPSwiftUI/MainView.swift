@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 
-struct CellView: View {
+struct MainView: View {
   
   @State private var surname = ""
   @State private var groups = ""
@@ -28,15 +28,19 @@ struct CellView: View {
   @FocusState private var textIsFocused: Bool
   
   var body: some View {
-    
-    ZStack {
+   
+    TabView {
+      
+      ZStack {
+      
       GeometryReader { geometry in Image(backGroundPicture)
-        BackGroundImage {
-          Image(backGroundPicture)
-        }
-        .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
+      BackGroundImage {
+        Image(backGroundPicture)
       }
-      ScrollView(showsIndicators: false) {
+      .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
+    }
+    
+        ScrollView(showsIndicators: false) {
         VStack {
           HStack {
             Text("Surname")
@@ -63,15 +67,49 @@ struct CellView: View {
             .listStyle(.plain)
           }
         }
+          
         .frame(width: frameWidth, alignment: .center)
       }
+      }
+      .tabItem {
+        Image(systemName: "icloud")
+          .symbolRenderingMode(.monochrome)
+          .foregroundColor(.red)
+          .symbolVariant(.fill)
+        Text("Main")
+      }
+      
+      FriendsView()
+        .tabItem {
+          Image(systemName: "person.3")
+            .symbolRenderingMode(.monochrome)
+            .foregroundColor(.red)
+            .symbolVariant(.fill)
+          Text("Friends")
+        }
+      GroupsView()
+        .tabItem {
+          Image(systemName: "network")
+            .symbolRenderingMode(.monochrome)
+            .foregroundColor(.red)
+            .symbolVariant(.fill)
+          Text("Groups")
+        }
+      NewsView()
+        .tabItem {
+          Image(systemName: "newspaper")
+            .symbolRenderingMode(.monochrome)
+            .foregroundColor(.red)
+            .symbolVariant(.fill)
+          Text("News")
+        }
     }
   }
   
-  struct CellView_Previews: PreviewProvider {
+    struct CellView_Previews: PreviewProvider {
     static var previews: some View {
-      CellView()
-        .previewInterfaceOrientation(.portraitUpsideDown)
+      MainView()
+        .previewInterfaceOrientation(.portrait)
     }
   }
 }
