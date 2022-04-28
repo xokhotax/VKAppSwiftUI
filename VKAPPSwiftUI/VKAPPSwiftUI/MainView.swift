@@ -13,17 +13,6 @@ struct MainView: View {
   
   @State private var surname = ""
   @State private var groups = ""
-  private let textFieldWidth = CGFloat(200)
-  private let frameWidth = CGFloat(320)
-  private let textFieldHeight = CGFloat(16)
-  
-  private var groupsList = [
-    Groups(name: "Pikabu"),
-    Groups(name: "Music"),
-    Groups(name: "Cartoons"),
-    Groups(name: "Swift"),
-    Groups(name: "Punk")
-  ]
 
   @FocusState private var textIsFocused: Bool
   

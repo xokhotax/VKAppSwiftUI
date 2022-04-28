@@ -18,9 +18,6 @@ struct LoginView: View {
   @State private var login = ""
   @State private var password = ""
   @State private var shouldShowLogo: Bool = true
-  private let textFieldWidth = CGFloat(220)
-  private let textFieldHeight = CGFloat(16)
-  private let frameWidth = CGFloat(320)
   
   @FocusState private var textIsFocused: Bool
   
