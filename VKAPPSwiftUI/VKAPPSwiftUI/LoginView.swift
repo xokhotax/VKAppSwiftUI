@@ -45,6 +45,7 @@ struct LoginView: View {
                               weight: .bold,
                               design: .default))
             }
+            
             HStack {
               Text("Login")
                 .foregroundColor(.white)
@@ -55,6 +56,7 @@ struct LoginView: View {
                 .keyboardType(.emailAddress)
                 .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
             }
+            
             HStack {
               Text("Password")
                 .foregroundColor(.white)

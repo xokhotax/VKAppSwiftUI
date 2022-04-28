@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct GroupsView: View {
-    var body: some View {
-        Text("Hello, Groups!")
-    }
+  var body: some View {
+    Text("Hello, Groups!")
+  }
 }
 
 struct GroupsView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupsView()
-    }
+  static var previews: some View {
+    GroupsView()
+  }
 }

@@ -8,8 +8,8 @@
 import Foundation
 
 struct Groups: Identifiable {
-    let name: String
-    let id = UUID()
+  let name: String
+  let id = UUID()
 }
 
 let groupsList = [

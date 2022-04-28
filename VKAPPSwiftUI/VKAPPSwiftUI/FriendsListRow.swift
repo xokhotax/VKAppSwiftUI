@@ -10,14 +10,14 @@ import SwiftUI
 struct FriendsListRow: View {
   var friend: Friend
   
-    var body: some View {
-        
-      HStack {
-        VStack(alignment: .leading) {
-          Text(friend.name)
-        }
-        Spacer()
+  var body: some View {
+    
+    HStack {
+      VStack(alignment: .leading) {
+        Text(friend.name)
       }
+      Spacer()
     }
+  }
 }
 

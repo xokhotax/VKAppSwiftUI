@@ -8,9 +8,9 @@
 import Foundation
 
 struct Friend: Identifiable {
-    let name: String
+  let name: String
   let pictures: [String]
-    let id = UUID()
+  let id = UUID()
 }
 
 let friendsList = [

@@ -13,52 +13,52 @@ struct MainView: View {
   
   @State private var surname = ""
   @State private var groups = ""
-
+  
   @FocusState private var textIsFocused: Bool
   
   var body: some View {
-   
+    
     TabView {
       
       ZStack {
-      
-      GeometryReader { geometry in Image(backGroundPicture)
-      BackGroundImage {
-        Image(backGroundPicture)
-      }
-      .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
-    }
-    
-        ScrollView(showsIndicators: false) {
-        VStack {
-          HStack {
-            Text("Surname")
-              .foregroundColor(.white)
-              .bold()
-              .padding(.horizontal, 16)
-            Spacer()
-            TextField("", text: $surname)
-              .focused($textIsFocused)
-              .keyboardType(.emailAddress)
-              .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
+        
+        GeometryReader { geometry in Image(backGroundPicture)
+          BackGroundImage {
+            Image(backGroundPicture)
           }
-          HStack {
-            Text("Groups")
-              .foregroundColor(.white)
-              .bold()
-              .padding(.horizontal, 16)
-            Spacer()
-            List(groupsList) {
-              Text($0.name)
-            }
-            .padding(16)
-            .frame(width: textFieldWidth, height:CGFloat(groupsList.count * 56), alignment: .center)
-            .listStyle(.plain)
-          }
+          .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
         }
+        
+        ScrollView(showsIndicators: false) {
+          VStack {
+            HStack {
+              Text("Surname")
+                .foregroundColor(.white)
+                .bold()
+                .padding(.horizontal, 16)
+              Spacer()
+              TextField("", text: $surname)
+                .focused($textIsFocused)
+                .keyboardType(.emailAddress)
+                .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
+            }
+            HStack {
+              Text("Groups")
+                .foregroundColor(.white)
+                .bold()
+                .padding(.horizontal, 16)
+              Spacer()
+              List(groupsList) {
+                Text($0.name)
+              }
+              .padding(16)
+              .frame(width: textFieldWidth, height:CGFloat(groupsList.count * 56), alignment: .center)
+              .listStyle(.plain)
+            }
+          }
           
-        .frame(width: frameWidth, alignment: .center)
-      }
+          .frame(width: frameWidth, alignment: .center)
+        }
       }
       .tabItem {
         Image(systemName: "icloud")
@@ -95,7 +95,7 @@ struct MainView: View {
     }
   }
   
-    struct CellView_Previews: PreviewProvider {
+  struct CellView_Previews: PreviewProvider {
     static var previews: some View {
       MainView()
         .previewInterfaceOrientation(.portrait)

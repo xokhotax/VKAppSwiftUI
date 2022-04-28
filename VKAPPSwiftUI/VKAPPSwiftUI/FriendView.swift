@@ -9,19 +9,17 @@ import SwiftUI
 
 struct FriendView: View {
   
-var friend: Friend
+  var friend: Friend
   
-    var body: some View {
-      VStack {
-        Text(friend.name)
-
-        Image(systemName: friend.pictures[0])
-          .resizable()
-          .edgesIgnoringSafeArea(.all)
-          .aspectRatio(contentMode: .fill)
-          
-       
-      }
+  var body: some View {
+    VStack {
+      Text(friend.name)
+      
+      Image(friend.pictures[0])
+        .resizable()
+        .frame(width: 150, height: 150, alignment: .top)
+      Spacer()
       
     }
+  }
 }
