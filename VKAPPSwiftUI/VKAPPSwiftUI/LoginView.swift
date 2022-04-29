@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct ContentView: View {
+struct LoginView: View {
   
   enum Field: Hashable {
     case login
@@ -18,9 +18,6 @@ struct ContentView: View {
   @State private var login = ""
   @State private var password = ""
   @State private var shouldShowLogo: Bool = true
-  private let textFieldWidth = CGFloat(220)
-  private let textFieldHeight = CGFloat(16)
-  private let frameWidth = CGFloat(320)
   
   @FocusState private var textIsFocused: Bool
   
@@ -48,6 +45,7 @@ struct ContentView: View {
                               weight: .bold,
                               design: .default))
             }
+            
             HStack {
               Text("Login")
                 .foregroundColor(.white)
@@ -58,6 +56,7 @@ struct ContentView: View {
                 .keyboardType(.emailAddress)
                 .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
             }
+            
             HStack {
               Text("Password")
                 .foregroundColor(.white)
@@ -70,7 +69,7 @@ struct ContentView: View {
             }
             
             HStack {
-              NavigationLink(destination: CellView()){
+              NavigationLink(destination: MainView()){
                 Text("Log In")
               }
               .padding(16)
@@ -94,7 +93,7 @@ struct ContentView: View {
   
   struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      ContentView()
+      LoginView()
         .previewInterfaceOrientation(.portraitUpsideDown)
     }
   }
