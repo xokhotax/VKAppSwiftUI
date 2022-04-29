@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct FriendsListRow: View {
-  var friend: Friend
+  var friend: FriendsVK
   
   var body: some View {
     
     HStack {
       VStack(alignment: .leading) {
-        Text(friend.name)
+        Text(friend.firstName)
       }
       Spacer()
     }

@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct FriendsView: View {
-  
+  var friendsArray = [FriendsVK]()
+  private var token: NotificationToken?
+  private let networkServices = NetworkServices()
+  var friend: Results<FriendsVK>? = try? Realm(configuration: RealmService.deleteIfMigration).objects(FriendsVK.self)
+ 
   var body: some View {
     
     NavigationView{
@@ -21,7 +26,7 @@ struct FriendsView: View {
         }
         ScrollView(showsIndicators: false) {
           
-          List(friendsList) { friend in
+          List(friendsArray) { friend in
             NavigationLink(destination: FriendView(friend: friend)) {
               FriendsListRow(friend: friend)
             }

@@ -9,13 +9,12 @@ import SwiftUI
 
 struct FriendView: View {
   
-  var friend: Friend
+  var friend: FriendsVK
   
   var body: some View {
     VStack {
-      Text(friend.name)
-      
-      Image(friend.pictures[0])
+      Text(friend.firstName)
+         Image(uiImage: friend.photosArray[0]!)
         .resizable()
         .frame(width: 150, height: 150, alignment: .top)
       Spacer()
