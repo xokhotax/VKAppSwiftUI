@@ -7,20 +7,22 @@
 
 import SwiftUI
 
-struct TestView: View {
-    var body: some View {
-        VKLoginWebView()
-     
-      NavigationView{
+struct VKLoginView: View {
+  var body: some View {
+    
+    ZStack {
+      NavigationView {
         NavigationLink(destination: MainView()) {
-          Text("NExt")
+          VKLoginWebView()
+            .navigationBarHidden(true)
         }
       }
     }
+  }
 }
 
 struct TestView_Previews: PreviewProvider {
-    static var previews: some View {
-        TestView()
-    }
+  static var previews: some View {
+    VKLoginView()
+  }
 }

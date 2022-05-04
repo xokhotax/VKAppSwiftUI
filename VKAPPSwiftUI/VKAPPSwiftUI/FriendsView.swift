@@ -15,7 +15,6 @@ struct FriendsView: View {
 
   var body: some View {
     
-    
     NavigationView {
       ZStack {
         GeometryReader { geometry in
@@ -23,9 +22,6 @@ struct FriendsView: View {
             Image(backGroundPicture)
           }
           .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
-        }
-        ScrollView(showsIndicators: false) {
-         
           List(friend!) { friend in
             NavigationLink(destination: FriendView(friend: friend)) {
               FriendsListRow(friend: friend)
@@ -34,10 +30,15 @@ struct FriendsView: View {
             .foregroundColor(Color.white)
           }
           .listStyle(.plain)
-          .modifier(FrameModifier(width: frameWidth, height: 500, alignment: .center))
+          .padding(.top, 0)
+          .frame(width: frameWidth, height: geometry.size.height, alignment: .top)
         }
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
       }
     }
+    .navigationBarHidden(true)
+    .navigationBarBackButtonHidden(true)
   }
 }
 

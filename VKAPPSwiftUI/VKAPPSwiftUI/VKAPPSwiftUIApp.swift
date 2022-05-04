@@ -14,7 +14,7 @@ struct VKAPPSwiftUIApp: App {
       // LoginView()
       // MainView()
    // VKLoginWebView()
-      TestView()
+      VKLoginView()
     }
   }
 }

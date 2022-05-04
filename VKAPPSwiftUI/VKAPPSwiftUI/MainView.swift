@@ -20,45 +20,12 @@ struct MainView: View {
   var body: some View {
     
     TabView {
-      
       ZStack {
-        
         GeometryReader { geometry in Image(backGroundPicture)
           BackGroundImage {
             Image(backGroundPicture)
           }
           .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
-        }
-        
-        ScrollView(showsIndicators: false) {
-          VStack {
-            HStack {
-              Text("Surname")
-                .foregroundColor(.white)
-                .bold()
-                .padding(.horizontal, 16)
-              Spacer()
-              TextField("", text: $surname)
-                .focused($textIsFocused)
-                .keyboardType(.emailAddress)
-                .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
-            }
-            HStack {
-              Text("Groups")
-                .foregroundColor(.white)
-                .bold()
-                .padding(.horizontal, 16)
-              Spacer()
-              List(groupsList) {
-                Text($0.name)
-              }
-              .padding(16)
-              .frame(width: textFieldWidth, height:CGFloat(groupsList.count * 56), alignment: .center)
-              .listStyle(.plain)
-            }
-          }
-          
-          .frame(width: frameWidth, alignment: .center)
         }
       }
       .tabItem {
@@ -68,7 +35,6 @@ struct MainView: View {
           .symbolVariant(.fill)
         Text("Main")
       }
-      
       FriendsView()
         .tabItem {
           Image(systemName: "person.3")
@@ -85,7 +51,6 @@ struct MainView: View {
             .symbolVariant(.fill)
           Text("Groups")
         }
-
       NewsView()
         .tabItem {
           Image(systemName: "newspaper")
@@ -95,6 +60,8 @@ struct MainView: View {
           Text("News")
         }
     }
+    .navigationBarBackButtonHidden(true)
+    .navigationBarHidden(true)
     .onAppear(perform: networkServices.fetchVKFriends)
   }
   
