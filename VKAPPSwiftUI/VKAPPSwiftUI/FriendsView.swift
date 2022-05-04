@@ -7,16 +7,16 @@
 
 import SwiftUI
 import RealmSwift
+import Alamofire
 
 struct FriendsView: View {
-  var friendsArray = [FriendsVK]()
-  private var token: NotificationToken?
   private let networkServices = NetworkServices()
   var friend: Results<FriendsVK>? = try? Realm(configuration: RealmService.deleteIfMigration).objects(FriendsVK.self)
- 
+
   var body: some View {
     
-    NavigationView{
+    
+    NavigationView {
       ZStack {
         GeometryReader { geometry in
           BackGroundImage {
@@ -25,18 +25,15 @@ struct FriendsView: View {
           .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
         }
         ScrollView(showsIndicators: false) {
-          
-          List(friendsArray) { friend in
+         
+          List(friend!) { friend in
             NavigationLink(destination: FriendView(friend: friend)) {
               FriendsListRow(friend: friend)
             }
             .listRowBackground(Color.clear)
             .foregroundColor(Color.white)
-            
           }
-          
           .listStyle(.plain)
-          
           .modifier(FrameModifier(width: frameWidth, height: 500, alignment: .center))
         }
       }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FriendView: View {
   
@@ -14,7 +15,7 @@ struct FriendView: View {
   var body: some View {
     VStack {
       Text(friend.firstName)
-         Image(uiImage: friend.photosArray[0]!)
+      KFImage(friend.friendAvatar!)
         .resizable()
         .frame(width: 150, height: 150, alignment: .top)
       Spacer()

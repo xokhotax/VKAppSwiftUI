@@ -7,13 +7,14 @@
 
 import SwiftUI
 import CoreData
-
+import RealmSwift
 
 struct MainView: View {
   
   @State private var surname = ""
   @State private var groups = ""
-  
+  private let networkServices = NetworkServices()
+
   @FocusState private var textIsFocused: Bool
   
   var body: some View {
@@ -84,6 +85,7 @@ struct MainView: View {
             .symbolVariant(.fill)
           Text("Groups")
         }
+
       NewsView()
         .tabItem {
           Image(systemName: "newspaper")
@@ -93,6 +95,7 @@ struct MainView: View {
           Text("News")
         }
     }
+    .onAppear(perform: networkServices.fetchVKFriends)
   }
   
   struct CellView_Previews: PreviewProvider {

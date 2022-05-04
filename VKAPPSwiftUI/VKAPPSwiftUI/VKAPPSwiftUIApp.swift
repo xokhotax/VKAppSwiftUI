@@ -12,7 +12,9 @@ struct VKAPPSwiftUIApp: App {
   var body: some Scene {
     WindowGroup {
       // LoginView()
-      MainView()
+      // MainView()
+   // VKLoginWebView()
+      TestView()
     }
   }
 }
