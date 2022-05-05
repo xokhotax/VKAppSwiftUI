@@ -9,7 +9,6 @@ import SwiftUI
 import WebKit
 
 struct VKLoginWebView: UIViewRepresentable {
-  
   fileprivate let navigationDelegate = WebViewNavigationDelegate()
   
   func makeUIView(context: Context) -> WKWebView {
@@ -37,8 +36,8 @@ struct VKLoginWebView: UIViewRepresentable {
       URLQueryItem(name: "response_type", value: "token"),
       URLQueryItem(name: "user_id", value: "userId"),
       URLQueryItem(name: "v", value: "5.131")
-      
     ]
+    
     let errorURL = URL(string: "https://oauth.vk.com/blank.html")!
     guard let url = urlComponents.url else { return URLRequest(url: errorURL)}
     let request = URLRequest(url: url)
@@ -58,7 +57,6 @@ class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
       decisionHandler(.allow)
       return
     }
-    
     let parameters = fragment
       .components(separatedBy: "&")
       .map { $0.components(separatedBy: "=") }
@@ -81,7 +79,6 @@ class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
     UserDefaults.standard.set(userId, forKey: "userId")
     NotificationCenter.default.post(name: NSNotification.Name("vkTokenSaved"), object: self)
     NotificationCenter.default.post(name: NSNotification.Name("userIdSaved"), object: self)
-    
     decisionHandler(.cancel)
   }
 }

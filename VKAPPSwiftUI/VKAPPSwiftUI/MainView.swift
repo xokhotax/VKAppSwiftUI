@@ -13,8 +13,9 @@ struct MainView: View {
   
   @State private var surname = ""
   @State private var groups = ""
+  
   private let networkServices = NetworkServices()
-
+  
   @FocusState private var textIsFocused: Bool
   
   var body: some View {
@@ -27,6 +28,7 @@ struct MainView: View {
           }
           .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
         }
+        
       }
       .tabItem {
         Image(systemName: "icloud")

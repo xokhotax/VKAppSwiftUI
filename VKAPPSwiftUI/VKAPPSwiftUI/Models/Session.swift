@@ -23,3 +23,5 @@ class Session: RealmSwift.Object {
   public static let shared = Session()
   
 }
+
+

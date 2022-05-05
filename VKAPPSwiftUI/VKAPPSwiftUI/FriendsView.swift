@@ -14,9 +14,8 @@ struct FriendsView: View {
   var friend: Results<FriendsVK>? = try? Realm(configuration: RealmService.deleteIfMigration).objects(FriendsVK.self)
 
   var body: some View {
-    
     NavigationView {
-      ZStack {
+//      ZStack {
         GeometryReader { geometry in
           BackGroundImage {
             Image(backGroundPicture)
@@ -30,15 +29,14 @@ struct FriendsView: View {
             .foregroundColor(Color.white)
           }
           .listStyle(.plain)
-          .padding(.top, 0)
-          .frame(width: frameWidth, height: geometry.size.height, alignment: .top)
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-      }
+//      }
     }
     .navigationBarHidden(true)
     .navigationBarBackButtonHidden(true)
+    .onAppear(perform: networkServices.fetchVKFriends)
   }
 }
 
