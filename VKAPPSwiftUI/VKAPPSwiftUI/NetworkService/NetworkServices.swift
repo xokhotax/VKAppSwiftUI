@@ -9,17 +9,16 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class NetworkServices {
+class NetworkServices: ObservableObject {
   
-  private let userId = Session.shared.userId
-  private let token = Session.shared.token
+  private var userId = Session.shared.userId
+  private var token = Session.shared.token
   private let host = "https://api.vk.com"
   private let version = "5.131"
   
-  func vkFriendsList(_ completion: @escaping (Result<[FriendsVK], Error>) -> Void ) {
-    
+  private func vkFriendsList(_ completion: @escaping (Result<[FriendsVK],
+                                                      Error>) -> Void ) {
     let path = "/method/friends.get"
-    
     let parameters = [
       "access_token" : token,
       "owner_id" : userId,
@@ -44,33 +43,32 @@ class NetworkServices {
       }
   }
   
-  func vkLogin() -> URLRequest {
-    
-    // MARK: - Standart SWIFT URLComponents
-    //
-    var urlComponents = URLComponents()
-    urlComponents.scheme = "https"
-    urlComponents.host = "oauth.vk.com"
-    urlComponents.path = "/authorize"
-    urlComponents.queryItems = [
-      URLQueryItem(name: "client_id", value: "8034847"),
-      URLQueryItem(name: "scope", value: "wall,friends,groups"),
-      URLQueryItem(name: "display", value: "mobile"),
-      URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-      URLQueryItem(name: "response_type", value: "token"),
-      URLQueryItem(name: "user_id", value: "userId"),
-      URLQueryItem(name: "v", value: "5.131")
-      
-    ]
-    let errorURL = URL(string: "https://oauth.vk.com/blank.html")!
-    guard let url = urlComponents.url else { return URLRequest(url: errorURL)}
-    let request = URLRequest(url: url)
-    return request
-  }
+  //  func vkLogin() -> URLRequest {
+  //
+  //    // MARK: - Standart SWIFT URLComponents
+  //    //
+  //    var urlComponents = URLComponents()
+  //    urlComponents.scheme = "https"
+  //    urlComponents.host = "oauth.vk.com"
+  //    urlComponents.path = "/authorize"
+  //    urlComponents.queryItems = [
+  //      URLQueryItem(name: "client_id", value: "8034847"),
+  //      URLQueryItem(name: "scope", value: "wall,friends,groups"),
+  //      URLQueryItem(name: "display", value: "mobile"),
+  //      URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
+  //      URLQueryItem(name: "response_type", value: "token"),
+  //      URLQueryItem(name: "user_id", value: "userId"),
+  //      URLQueryItem(name: "v", value: "5.131")
+  //
+  //    ]
+  //    let errorURL = URL(string: "https://oauth.vk.com/blank.html")!
+  //    guard let url = urlComponents.url else { return URLRequest(url: errorURL)}
+  //    let request = URLRequest(url: url)
+  //    return request
+  //  }
   
   func fetchVKFriends() {
-    vkFriendsList {
-      result in
+    vkFriendsList { result in
       switch result {
         case let .failure(error):
           print(error)
@@ -78,6 +76,18 @@ class NetworkServices {
           try? RealmService.save(items: friend, update: .modified)
       }
     }
+  }
+  
+  func fetchVKFriendPhoto(_ friendID: String) {
+    VKFriendloadPhoto(friendId: friendID, completion: {
+      result in
+      switch result {
+        case let .failure(error):
+          print(error)
+        case let .success(friendPhoto):
+          try? RealmService.save(items: friendPhoto, update: .modified)
+      }
+    })
   }
   
   
@@ -136,33 +146,31 @@ class NetworkServices {
   //            }
   //    }
   
-  //    func VKFriendloadPhoto(friendId: String, completion: @escaping (Result<[Photo], Error>) -> Void) {
-  //        let path = "/method/photos.get"
-  //        let parameters: Parameters = [
-  //            "access_token": token,
-  //            "extended": 1,
-  //            "v": version,
-  //            "owner_id": friendId,
-  //            "album_id": "profile",
-  //            "photo_sizes": 1
-  //        ]
-  //
-  //        AF.request(host + path, parameters: parameters).response {
-  //            response in
-  //            switch response.result {
-  //                case .failure(let error):
-  //                    completion(.failure(error))
-  //                case .success(let data):
-  //                    guard let data = data,
-  //                          let json = try? JSON(data: data) else { return }
-  //
-  //                    let friendPhotoJson = json["response"]["items"].arrayValue
-  //                    let friendPhoto = friendPhotoJson.map { Photo(json: $0) }
-  //
-  //                    completion(.success(friendPhoto))
-  //            }
-  //        }
-  //    }
+  private func VKFriendloadPhoto(friendId: String, completion: @escaping (Result<[Photo],
+                                                                          Error>) -> Void) {
+    let path = "/method/photos.get"
+    let parameters: Parameters = [
+      "access_token": token,
+      "extended": 1,
+      "v": version,
+      "owner_id": friendId,
+      "album_id": "profile",
+      "photo_sizes": 1
+    ]
+    
+    AF.request(host + path, parameters: parameters).response { response in
+      switch response.result {
+        case .failure(let error):
+          completion(.failure(error))
+        case .success(let data):
+          guard let data = data,
+                let json = try? JSON(data: data) else { return }
+          let friendPhotoJson = json["response"]["items"].arrayValue
+          let friendPhoto = friendPhotoJson.map { Photo(json: $0) }
+          completion(.success(friendPhoto))
+      }
+    }
+  }
   
   //    func vkGroupSearch(searchText: String) {
   //

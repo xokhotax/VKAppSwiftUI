@@ -19,58 +19,35 @@ struct MainView: View {
   @FocusState private var textIsFocused: Bool
   
   var body: some View {
-    
     TabView {
-      ZStack {
-        GeometryReader { geometry in Image(backGroundPicture)
-          BackGroundImage {
-            Image(backGroundPicture)
-          }
-          .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
-        }
-        
-      }
-      .tabItem {
-        Image(systemName: "icloud")
-          .symbolRenderingMode(.monochrome)
-          .foregroundColor(.red)
-          .symbolVariant(.fill)
-        Text("Main")
-      }
       FriendsView()
         .tabItem {
           Image(systemName: "person.3")
-            .symbolRenderingMode(.monochrome)
-            .foregroundColor(.red)
-            .symbolVariant(.fill)
           Text("Friends")
         }
       GroupsView()
         .tabItem {
           Image(systemName: "network")
-            .symbolRenderingMode(.monochrome)
-            .foregroundColor(.red)
-            .symbolVariant(.fill)
           Text("Groups")
         }
       NewsView()
         .tabItem {
           Image(systemName: "newspaper")
-            .symbolRenderingMode(.monochrome)
-            .foregroundColor(.red)
-            .symbolVariant(.fill)
           Text("News")
         }
     }
+    .onAppear(perform: networkServices.fetchVKFriends)
     .navigationBarBackButtonHidden(true)
     .navigationBarHidden(true)
-    .onAppear(perform: networkServices.fetchVKFriends)
+    .navigationBarTitleDisplayMode(.inline)
   }
-  
-  struct CellView_Previews: PreviewProvider {
-    static var previews: some View {
-      MainView()
-        .previewInterfaceOrientation(.portrait)
-    }
+
+}
+
+struct CellView_Previews: PreviewProvider {
+  static var previews: some View {
+    MainView()
+      .previewInterfaceOrientation(.portrait)
   }
 }
+

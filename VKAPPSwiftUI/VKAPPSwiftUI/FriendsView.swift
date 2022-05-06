@@ -11,7 +11,7 @@ import Alamofire
 
 struct FriendsView: View {
   private let networkServices = NetworkServices()
-  var friend: Results<FriendsVK>? = try? Realm(configuration: RealmService.deleteIfMigration).objects(FriendsVK.self)
+  private var friend: Results<FriendsVK>? = try? Realm(configuration: RealmService.deleteIfMigration).objects(FriendsVK.self)
 
   var body: some View {
     NavigationView {
@@ -24,6 +24,7 @@ struct FriendsView: View {
           List(friend!) { friend in
             NavigationLink(destination: FriendView(friend: friend)) {
               FriendsListRow(friend: friend)
+              
             }
             .listRowBackground(Color.clear)
             .foregroundColor(Color.white)
@@ -36,6 +37,7 @@ struct FriendsView: View {
     }
     .navigationBarHidden(true)
     .navigationBarBackButtonHidden(true)
+    .navigationBarTitleDisplayMode(.inline)
     .onAppear(perform: networkServices.fetchVKFriends)
   }
 }

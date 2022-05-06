@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 import Realm
 
-class RealmService {
+class RealmService: ObservableObject {
     static let deleteIfMigration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     
     static func save<T: Object>(

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FriendsListRow: View {
   var friend: FriendsVK
@@ -13,8 +14,13 @@ struct FriendsListRow: View {
   var body: some View {
     
     HStack {
+      KFImage(friend.friendAvatar!)
+        .resizable()
+        .frame(width: 100, height: 100, alignment: .top)
+        .clipShape(Circle())
+        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
       VStack(alignment: .leading) {
-        Text(friend.firstName)
+        Text("\(friend.firstName) \(friend.lastName)")
       }
       Spacer()
     }

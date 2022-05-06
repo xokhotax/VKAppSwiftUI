@@ -27,7 +27,6 @@ struct LoginView: View {
           Text("To Main View")
         }
       }
-
     }
   }
   
