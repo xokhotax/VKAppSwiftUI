@@ -38,6 +38,6 @@ class FriendsVK: Object, Identifiable  {
 
 
 class FriendID: ObservableObject {
-  @Published var friendID = " "
+  @Published var friendID = ""
   
 }

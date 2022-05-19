@@ -9,8 +9,8 @@ import SwiftUI
 import Kingfisher
 
 struct FriendView: View {
-  @EnvironmentObject var friendID: FriendID
   
+  var friendID = ""
   var friend: FriendsVK
   
   var body: some View {
@@ -24,6 +24,7 @@ struct FriendView: View {
         .padding(.top, 16)
       
       FriendGalleryList(friend: friend)
+      Text(friendID)
       
       
       

@@ -8,8 +8,10 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import SwiftUI
 
 class NetworkServices: ObservableObject {
+  @EnvironmentObject var friendID: FriendID
   
   private var userId = Session.shared.userId
   private var token = Session.shared.token
@@ -78,16 +80,15 @@ class NetworkServices: ObservableObject {
     }
   }
   
-  func fetchVKFriendPhoto(_ friendID: String) {
-    VKFriendloadPhoto(friendId: friendID, completion: {
-      result in
+  func fetchVKFriendPhoto() {
+    VKFriendloadPhoto { result in
       switch result {
         case let .failure(error):
           print(error)
         case let .success(friendPhoto):
           try? RealmService.save(items: friendPhoto, update: .modified)
       }
-    })
+    }
   }
   
   
@@ -146,14 +147,14 @@ class NetworkServices: ObservableObject {
   //            }
   //    }
   
-  private func VKFriendloadPhoto(friendId: String, completion: @escaping (Result<[Photo],
-                                                                          Error>) -> Void) {
+  private func VKFriendloadPhoto(_ completion: @escaping (Result<[Photo],
+                                                        Error>) -> Void) {
     let path = "/method/photos.get"
     let parameters: Parameters = [
       "access_token": token,
       "extended": 1,
       "v": version,
-      "owner_id": friendId,
+      "owner_id": friendID.friendID,
       "album_id": "profile",
       "photo_sizes": 1
     ]

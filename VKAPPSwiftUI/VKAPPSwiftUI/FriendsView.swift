@@ -13,6 +13,8 @@ struct FriendsView: View {
   private let networkServices = NetworkServices()
   private var friend: Results<FriendsVK>? = try? Realm(configuration: RealmService.deleteIfMigration).objects(FriendsVK.self)
 
+  @StateObject var friendID = FriendID()
+  
   var body: some View {
     NavigationView {
 //      ZStack {
@@ -22,7 +24,7 @@ struct FriendsView: View {
           }
           .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
           List(friend!) { friend in
-            NavigationLink(destination: FriendView(friend: friend)) {
+            NavigationLink(destination: FriendView(friendID: friend.friendId, friend: friend)) {
               FriendsListRow(friend: friend)
               
             }

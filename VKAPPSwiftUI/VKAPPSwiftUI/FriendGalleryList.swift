@@ -11,7 +11,7 @@ import Kingfisher
 struct FriendGalleryList: View {
   var friend: FriendsVK
   var networkServices = NetworkServices()
-  @EnvironmentObject var friendID: FriendID
+  @StateObject var friendID = FriendID()
   
   var body: some View {
     Text("FriendGalleryList")
@@ -23,7 +23,7 @@ struct FriendGalleryList: View {
       }
       Spacer()
     }
-//    .onAppear(perform: networkServices.fetchVKFriendPhoto(friendID.friendID))
+    .onTapGesture(perform: networkServices.fetchVKFriendPhoto)
   }
 }
 
