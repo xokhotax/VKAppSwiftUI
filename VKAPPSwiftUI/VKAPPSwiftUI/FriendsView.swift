@@ -6,36 +6,41 @@
 //
 
 import SwiftUI
+import RealmSwift
+import Alamofire
 
 struct FriendsView: View {
+  private let networkServices = NetworkServices()
+  private var friend: Results<FriendsVK>? = try? Realm(configuration: RealmService.deleteIfMigration).objects(FriendsVK.self)
+
+  @StateObject var friendID = FriendID()
   
   var body: some View {
-    
-    NavigationView{
-      ZStack {
+    NavigationView {
+//      ZStack {
         GeometryReader { geometry in
           BackGroundImage {
             Image(backGroundPicture)
           }
           .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
-        }
-        ScrollView(showsIndicators: false) {
-          
-          List(friendsList) { friend in
-            NavigationLink(destination: FriendView(friend: friend)) {
+          List(friend!) { friend in
+            NavigationLink(destination: FriendView(friendID: friend.friendId, friend: friend)) {
               FriendsListRow(friend: friend)
+              
             }
             .listRowBackground(Color.clear)
             .foregroundColor(Color.white)
-            
           }
-          
           .listStyle(.plain)
-          
-          .modifier(FrameModifier(width: frameWidth, height: 500, alignment: .center))
         }
-      }
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+//      }
     }
+    .navigationBarHidden(true)
+    .navigationBarBackButtonHidden(true)
+    .navigationBarTitleDisplayMode(.inline)
+    .onAppear(perform: networkServices.fetchVKFriends)
   }
 }
 

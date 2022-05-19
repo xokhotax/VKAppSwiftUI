@@ -6,20 +6,31 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FriendView: View {
   
-  var friend: Friend
+  var friendID = ""
+  var friend: FriendsVK
   
   var body: some View {
-    VStack {
-      Text(friend.name)
-      
-      Image(friend.pictures[0])
+    VStack(alignment: .center, spacing: 0) {
+      KFImage(friend.friendAvatar!)
         .resizable()
         .frame(width: 150, height: 150, alignment: .top)
-      Spacer()
+        .clipShape(Circle())
+        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+      Text("\(friend.firstName) \(friend.lastName)")
+        .padding(.top, 16)
       
+      FriendGalleryList(friend: friend)
+      Text(friendID)
+      
+      
+      
+      Spacer()
     }
+    .navigationBarTitleDisplayMode(.inline)
   }
 }
+

@@ -6,6 +6,9 @@
 //
 
 import Foundation
+// import UIKit
+// import SwiftyJSON
+// import RealmSwift
 
 struct Groups: Identifiable {
   let name: String
@@ -19,3 +22,24 @@ let groupsList = [
   Groups(name: "Swift"),
   Groups(name: "Punk")
 ]
+
+
+
+//class Groups: Object {
+//  @Persisted var name: String = ""
+//  @Persisted  var photoUrl: String = ""
+//  @objc dynamic var avatar: URL? { URL(string: "\(photoUrl)") }
+//  @Persisted var id = ""
+//  
+//  override static func primaryKey() -> String? {
+//    return "id"
+//  }
+//  
+//  convenience init(json: SwiftyJSON.JSON) {
+//    self.init()
+//    
+//    self.name = json["name"].stringValue
+//    self.photoUrl = json["photo_100"].stringValue
+//    self.id = json["id"].stringValue
+//  }
+//}

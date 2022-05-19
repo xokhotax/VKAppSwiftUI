@@ -10,83 +10,22 @@ import Combine
 
 struct LoginView: View {
   
-  enum Field: Hashable {
-    case login
-    case password
-  }
-  
-  @State private var login = ""
-  @State private var password = ""
-  @State private var shouldShowLogo: Bool = true
-  
-  @FocusState private var textIsFocused: Bool
+  @State private var vkLoginWindowShow = false
   
   var body: some View {
-    
+
     NavigationView {
-      
-      ZStack {
-        GeometryReader { geometry in
-          BackGroundImage {
-            Image(backGroundPicture)
-          }
-          .frame(maxWidth: geometry.size.width, maxHeight:geometry.size.height)
+      VStack {
+        Button("Login via VK"){
+          vkLoginWindowShow.toggle()
         }
-        
-        ScrollView(showsIndicators: false) {
-          
-          VStack {
-            if shouldShowLogo {
-              Text("Welcome to VK App")
-                .foregroundColor(.white)
-                .padding(.top, 10)
-                .textCase(.uppercase)
-                .font(.system(size: 16,
-                              weight: .bold,
-                              design: .default))
-            }
-            
-            HStack {
-              Text("Login")
-                .foregroundColor(.white)
-                .padding(.leading, 16)
-              Spacer()
-              TextField("", text: $login)
-                .focused($textIsFocused)
-                .keyboardType(.emailAddress)
-                .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
-            }
-            
-            HStack {
-              Text("Password")
-                .foregroundColor(.white)
-                .padding(.top, 16)
-                .padding(.leading, 16)
-              Spacer()
-              TextField("", text: $password)
-                .focused($textIsFocused)
-                .modifier(FrameModifier(width: textFieldWidth, height: textFieldHeight, alignment: .center))
-            }
-            
-            HStack {
-              NavigationLink(destination: MainView()){
-                Text("Log In")
-              }
-              .padding(16)
-              .disabled(login.isEmpty || password.isEmpty)
-              .foregroundColor(.white)
-              .font(.system(size: 16, weight:.bold))
-              .frame(maxWidth:frameWidth)
-              .navigationBarHidden(true)
-            }
-            
-            Spacer()
-          }
-          .frame(maxWidth:frameWidth)
+        .sheet(isPresented: $vkLoginWindowShow) {
+          VKLoginWebView()
         }
-      }
-      .onTapGesture(count: 1) {
-        textIsFocused = false
+        Spacer()
+        NavigationLink(destination: MainView()) {
+          Text("To Main View")
+        }
       }
     }
   }
